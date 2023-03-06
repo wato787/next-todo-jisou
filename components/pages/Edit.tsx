@@ -15,6 +15,15 @@ interface List {
   detail: string;
 }
 
+// ここで情報を取得したいのですがslugをrecoilで管理しているためいid指定ができず。。
+// export const getServerSideProps=async()=>{
+//   if (!slug) return; // idが存在しない場合は処理を中止
+//   const docRef = doc(collection(db, "list"), slug as string);
+//   const docSnap = await getDoc(docRef);
+//   const data = docSnap.data() as List;
+//   setData(data);
+// }
+
 const Edit = () => {
   const [data, setData] = useRecoilState(dataState);
   // const [data, setData] = useRecoilState<List>({ title: "", detail: "" });

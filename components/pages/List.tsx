@@ -86,7 +86,8 @@ export default List;
 // import ListCard from "../Organisms/Card";
 // import { useRouter } from "next/router";
 
-// export const getStaticProps = async () => {
+// export const getServerSideProps = async () => {
+  // ここでfirebaseから取得したいのですが取得できません。
 //   const q = query(collection(db, "list"));
 //   const docs = await getDocs(q);
 //   console.log(q)
