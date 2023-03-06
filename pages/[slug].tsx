@@ -18,7 +18,8 @@ const Detail = () => {
   console.log(router.query);
   // const [data, setData] = useState<List>();
   const [data, setData] = useRecoilState(dataState);
-  const setSlug:any=useSetRecoilState(slugState)
+  const setSlug =useSetRecoilState(slugState)
+  // anyでないとエラーがでてしまう↑
   
 
   useEffect(() => {

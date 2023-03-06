@@ -38,7 +38,7 @@ export const todoListState = atom<listType[]>({
 });
 
 
-export const slugState=atom({
+export const slugState=atom<any>({
   key:"slugState",
   default:""
 })
