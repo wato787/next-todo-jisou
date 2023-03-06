@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { TextInput, createStyles, rem } from "@mantine/core";
+import { useRecoilState } from "recoil";
+import { todoTitleState } from "@/Recoil/Recoil";
 
 const useStyles = createStyles(
   (theme, { floating }: { floating: boolean }) => ({
@@ -45,7 +47,9 @@ const useStyles = createStyles(
 
 export default function FloatingLabelInput() {
   const [focused, setFocused] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useRecoilState(todoTitleState);
+
+
   const { classes } = useStyles({
     floating: value.trim().length !== 0 || focused,
   });

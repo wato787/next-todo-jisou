@@ -1,10 +1,11 @@
-import { todoDetailState } from "@/Recoil/Recoil";
 import { Textarea } from "@mantine/core";
-import { useRecoilState } from "recoil";
+import { ChangeEvent } from "react";
+interface Props {
+  value: string;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+}
 
-
-const TextareaBox = () => {
-  const [value, setValue] = useRecoilState(todoDetailState);
+const EditTexare: React.FC<Props> = ({ value, onChange }) => {
   return (
     <>
       <Textarea
@@ -16,10 +17,10 @@ const TextareaBox = () => {
         w={800}
         h={200}
         value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
+        onChange={onChange}
       />
     </>
   );
 };
 
-export default TextareaBox;
+export default EditTexare;
