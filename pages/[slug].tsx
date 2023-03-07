@@ -1,6 +1,6 @@
 import { db } from "@/firebase";
 import { Button, Flex, Text } from "@mantine/core";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -32,12 +32,15 @@ const Detail: NextPage = ({ data }: any) => {
   );
 };
 
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const colRef = db.collection("list");
-  const snapshot = await colRef.get();
+  const firestore = getFirestore();
+  const colRef = collection(firestore, "list");
+
+  const snapshot = await getDocs(colRef);
   const paths = snapshot.docs.map((doc) => {
     return {
-      params: { slug: doc.id },
+      params: { slug: doc.id.toString() },
     };
   });
 
