@@ -1,6 +1,7 @@
 import Input from "@/components/pages/Input";
+import { NextPage } from "next";
 
-const input = () => {
+const input:NextPage = () => {
     return (
        <Input/>
     );

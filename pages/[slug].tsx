@@ -1,48 +1,24 @@
 import { db } from "@/firebase";
-import { dataList, dataState, slugState } from "@/Recoil/Recoil";
 import { Button, Flex, Text } from "@mantine/core";
 import { collection, doc, getDoc } from "firebase/firestore";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from 'recoil';
 
 interface List {
   title: string;
   detail: string;
 }
 
-const Detail = () => {
+const Detail: NextPage = ({ data }: any) => {
   const router = useRouter();
-  const { slug } = router.query;
-  console.log(router.query);
-  // const [data, setData] = useState<List>();
-  const [data, setData] = useRecoilState(dataState);
-  const setSlug =useSetRecoilState(slugState)
-  // anyでないとエラーがでてしまう↑
-  
-
-  useEffect(() => {
-    const fetchDetail = async () => {
-      if (!slug) return; // idが存在しない場合は処理を中止
-      const docRef = doc(collection(db, "list"), slug as string);
-      const docSnap = await getDoc(docRef);
-      const data = docSnap.data() as List;
-      setData(data);
-      setSlug(slug)
-    };
-    fetchDetail();
-  }, []);
 
   const handleEditButton = () => {
-
     router.push({
-      pathname: '/edit'
-     
-    })
-  }
+      pathname: "/edit",
+    });
+  };
 
-  //   console.log(data);
 
   return (
     <Flex direction="column" justify="center" align="center">
@@ -56,4 +32,29 @@ const Detail = () => {
   );
 };
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const colRef = db.collection("list");
+  const snapshot = await colRef.get();
+  const paths = snapshot.docs.map((doc) => {
+    return {
+      params: { slug: doc.id },
+    };
+  });
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const slug = params?.slug;
+  const docRef = doc(collection(db, "list"), slug as string);
+  const docSnap = await getDoc(docRef);
+  const data = docSnap.data() as List;
+
+  return {
+    props: { data },
+  };
+};
 export default Detail;
